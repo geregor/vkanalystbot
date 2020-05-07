@@ -59,20 +59,21 @@ while True:
         #print(result,rusult)
         text = ""
         if int(result[0]) == (int(rusult[0])-1):
-            result[1] = int(result[1])-10
+            result[1] = int(result[1])-1
             if result[1] < 0:
                 result[1] = 60 + result[1]
 
             if  50 <= int(rusult[1]) <= 59:
                 result[1]=60 - result[1]
             else:
-                result[1]= result[1]+10
+                result[1]= result[1]+1
 
-            if int(rusult[1]) - 10 <= int(result[1]) <= int(rusult[1]):
+            if int(rusult[1]) - 1 <= int(result[1]) <= int(rusult[1]):
                 if teampercent[1]-teampercent[0] > 0:
                     text = text + str(teamname[1])
                 else:
                     text = text + str(teamname[0])
+                del teams[i]
                 print("[БОТ]Приближается матч между "+teamname[0]+" и "+teamname[1]+"\nШансы: "+str(teampercent[0])+" на "+str(teampercent[1])+"\nОчень ожидаемо что выйграют "+text)
                 vk.method("wall.post", {"from_group": 1, "owner_id": -154885097, "message": "[БОТ]Приближается матч между "+teamname[0]+" и "+teamname[1]+"\nШансы: "+str(teampercent[0])+" на "+str(teampercent[1])+"\nОчень ожидаемо что выйграют "+text})
 
@@ -80,6 +81,6 @@ while True:
         if timeforsleep == 10:
             timeforsleep = 0
             print("Отдыхаем")
-            sleep(600)
+            sleep(60)
 
 
