@@ -58,29 +58,28 @@ while True:
         rusult = re.split(r':',timenow,maxsplit=1)
         #print(result,rusult)
         text = ""
+        if 0 <= int(result[1]) < 5:
+            result[0] = str(int(result[0]) - 1)
         if int(result[0]) == (int(rusult[0])-1):
-            result[1] = int(result[1])-1
-            if result[1] < 0:
-                result[1] = 60 + result[1]
-
-            if  50 <= int(rusult[1]) <= 59:
-                result[1]=60 - result[1]
+            matchmin = int(result[1])
+            mymin = (rusult[1])
+            if 0 <= int(matchmin) < 5:
+                matchmin = 60 + (matchmin - 5)
             else:
-                result[1]= result[1]+1
+                matchmin = int(matchmin)-5
 
-            if int(rusult[1]) - 1 <= int(result[1]) <= int(rusult[1]):
+            if int(mymin) - 5 <= int(matchmin) <= int(mymin):
                 if teampercent[1]-teampercent[0] > 0:
                     text = text + str(teamname[1])
                 else:
                     text = text + str(teamname[0])
-                del teams[i]
                 print("[БОТ]Приближается матч между "+teamname[0]+" и "+teamname[1]+"\nШансы: "+str(teampercent[0])+" на "+str(teampercent[1])+"\nОчень ожидаемо что выйграют "+text)
-                vk.method("wall.post", {"from_group": 1, "owner_id": -154885097, "message": "[БОТ]Приближается матч между "+teamname[0]+" и "+teamname[1]+"\nШансы: "+str(teampercent[0])+" на "+str(teampercent[1])+"\nОчень ожидаемо что выйграют "+text})
+                #vk.method("wall.post", {"from_group": 1, "owner_id": -154885097, "message": "[БОТ]Приближается матч между "+teamname[0]+" и "+teamname[1]+"\nШансы: "+str(teampercent[0])+" на "+str(teampercent[1])+"\nОчень ожидаемо что выйграют "+text})
 
     #Классно
         if timeforsleep == 10:
             timeforsleep = 0
             print("Отдыхаем")
-            sleep(60)
+            sleep(300)
 
 
