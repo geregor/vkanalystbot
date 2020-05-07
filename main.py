@@ -69,12 +69,13 @@ while True:
                 matchmin = int(matchmin)-5
 
             if int(mymin) - 5 <= int(matchmin) <= int(mymin):
-                if teampercent[1]-teampercent[0] > 0:
-                    text = text + str(teamname[1])
-                else:
-                    text = text + str(teamname[0])
-                print("[БОТ]Приближается матч между "+teamname[0]+" и "+teamname[1]+"\nШансы: "+str(teampercent[0])+" на "+str(teampercent[1])+"\nОчень ожидаемо что выйграют "+text)
-                #vk.method("wall.post", {"from_group": 1, "owner_id": -154885097, "message": "[БОТ]Приближается матч между "+teamname[0]+" и "+teamname[1]+"\nШансы: "+str(teampercent[0])+" на "+str(teampercent[1])+"\nОчень ожидаемо что выйграют "+text})
+                if teampercent != []:
+                    if teampercent[1]-teampercent[0] > 0:
+                        text = text + str(teamname[1])
+                    else:
+                        text = text + str(teamname[0])
+                    print("[БОТ]Приближается матч между "+teamname[0]+" и "+teamname[1]+"\nШансы: "+str(teampercent[0])+" на "+str(teampercent[1])+"\nОчень ожидаемо что выйграют "+text)
+                    vk.method("wall.post", {"from_group": 1, "owner_id": -154885097, "message": "[БОТ]Приближается матч между "+teamname[0]+" и "+teamname[1]+"\nШансы: "+str(teampercent[0])+" на "+str(teampercent[1])+"\nОчень ожидаемо что выйграют "+text})
 
     #Классно
         if timeforsleep == 10:
