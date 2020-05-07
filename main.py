@@ -51,36 +51,21 @@ while True:
         soup = BS ( s.content , 'html.parser' )
         for q in soup.findAll('div', class_= 'timeAndEvent'):
             timer = q.select('.time')
-            #print(timer[0].text)
+            print(timer[0].text)
             timer = timer[0].text
         #print(timer.replace(time.strftime("%H:"), ""))
         result = re.split(r':',timer,maxsplit=1)
         rusult = re.split(r':',timenow,maxsplit=1)
         #print(result,rusult)
         text = ""
-        if 0 <= int(result[1]) < 5:
-            result[0] = str(int(result[0]) - 1)
-        if int(result[0]) == (int(rusult[0])-1):
-            matchmin = int(result[1])
-            mymin = (rusult[1])
-            if 0 <= int(matchmin) < 5:
-                matchmin = 60 + (matchmin - 5)
-            else:
-                matchmin = int(matchmin)-5
-
-            if int(mymin) - 5 <= int(matchmin) <= int(mymin):
-                if teampercent != []:
-                    if teampercent[1]-teampercent[0] > 0:
-                        text = text + str(teamname[1])
-                    else:
-                        text = text + str(teamname[0])
-                    print("[БОТ]Приближается матч между "+teamname[0]+" и "+teamname[1]+"\nШансы: "+str(teampercent[0])+" на "+str(teampercent[1])+"\nОчень ожидаемо что выйграют "+text)
-                    vk.method("wall.post", {"from_group": 1, "owner_id": -154885097, "message": "[БОТ]Приближается матч между "+teamname[0]+" и "+teamname[1]+"\nШансы: "+str(teampercent[0])+" на "+str(teampercent[1])+"\nОчень ожидаемо что выйграют "+text})
+        if int(result[0]) == (int(rusult[0])+2):
+                print("[БОТ]Приближается матч между "+teamname[0]+" и "+teamname[1]+"\nШансы: "+str(teampercent[0])+" на "+str(teampercent[1])+"\nОчень ожидаемо что выйграют "+text)
+                vk.method("wall.post", {"from_group": 1, "owner_id": -154885097, "message": "[БОТ]Приближается матч между "+teamname[0]+" и "+teamname[1]+"\nШансы: "+str(teampercent[0])+" на "+str(teampercent[1])+"\nОчень ожидаемо что выйграют "+text})
 
     #Классно
         if timeforsleep == 10:
             timeforsleep = 0
             print("Отдыхаем")
-            sleep(300)
+            sleep(3600)
 
 
