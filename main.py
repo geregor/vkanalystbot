@@ -62,7 +62,8 @@ while True:
             text = text + str(teamname[1])
         else:
             text = text + str(teamname[0])
-        if int(rusult[1]) == (0 or 34):
+        print(rusult[0])
+        if int(result[0]) == int(rusult[0])-1:
                 print("[БОТ]Приближается матч между "+teamname[0]+" и "+teamname[1]+"\nШансы: "+str(teampercent[0])+" на "+str(teampercent[1])+"\nОчень ожидаемо что выйграют "+text)
                 vk.method("wall.post", {"from_group": 1, "owner_id": -154885097, "message": "[БОТ]Приближается матч между "+teamname[0]+" и "+teamname[1]+"\nШансы: "+str(teampercent[0])+" на "+str(teampercent[1])+"\nОчень ожидаемо что выйграют "+text})
 
@@ -70,6 +71,6 @@ while True:
         if timeforsleep == 5:
             timeforsleep = 0
             print("Отдыхаем")
-            #sleep(3600)
+            sleep(3)
 
 
