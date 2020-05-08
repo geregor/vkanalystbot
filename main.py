@@ -22,10 +22,12 @@ while True:
             teams.append(link.get('href'))
     #print(teams)
     qer = list(range(10))
+    i = 0
     timeforsleep = 0
     #Узнаем проценты на команду
     for i in teams:
         con = i
+        print(i)
         timeforsleep += 1
         s = requests.get ( 'https://www.hltv.org' + str ( con ) )
         soup = BS ( s.content , 'html.parser' )
@@ -61,13 +63,14 @@ while True:
             text = text + str(teamname[1])
         else:
             text = text + str(teamname[0])
-        print(rusult[0])
-        if int(result[0]) == int(rusult[0])-1:
+        if int(result[0]) == (int(rusult[0])-1):
                 print("[БОТ]Приближается матч между "+teamname[0]+" и "+teamname[1]+"\nШансы: "+str(teampercent[0])+" на "+str(teampercent[1])+"\nОчень ожидаемо что выйграют "+text)
                 vk.method("wall.post", {"from_group": 1, "owner_id": -154885097, "message": "[БОТ]Приближается матч между "+teamname[0]+" и "+teamname[1]+"\nШансы: "+str(teampercent[0])+" на "+str(teampercent[1])+"\nОчень ожидаемо что выйграют "+text})
 
-        #Классно
-        if con = teams[5]:
-             sleep(60)
+    #Классно
+        if timeforsleep == 10:
+            timeforsleep = 0
+            print("Отдыхаем")
+            sleep(3600)
 
 
