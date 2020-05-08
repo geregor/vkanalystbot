@@ -66,9 +66,7 @@ while True:
                 vk.method("wall.post", {"from_group": 1, "owner_id": -154885097, "message": "[БОТ]Приближается матч между "+teamname[0]+" и "+teamname[1]+"\nШансы: "+str(teampercent[0])+" на "+str(teampercent[1])+"\nОчень ожидаемо что выйграют "+text})
 
         #Классно
-        if timeforsleep == 5:
-            timeforsleep = 0
-            print("Отдыхаем")
-            return i
+        if i = teams[5]:
+             sleep(60)
 
 
