@@ -25,6 +25,7 @@ while True:
     timeforsleep = 0
     #Узнаем проценты на команду
     for i in teams:
+        con = i
         timeforsleep += 1
         s = requests.get ( 'https://www.hltv.org' + str ( con ) )
         soup = BS ( s.content , 'html.parser' )
@@ -66,7 +67,7 @@ while True:
                 vk.method("wall.post", {"from_group": 1, "owner_id": -154885097, "message": "[БОТ]Приближается матч между "+teamname[0]+" и "+teamname[1]+"\nШансы: "+str(teampercent[0])+" на "+str(teampercent[1])+"\nОчень ожидаемо что выйграют "+text})
 
         #Классно
-        if i = teams[5]:
+        if con = teams[5]:
              sleep(60)
 
 
