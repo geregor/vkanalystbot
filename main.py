@@ -22,11 +22,9 @@ while True:
             teams.append(link.get('href'))
     #print(teams)
     qer = list(range(10))
-    i = 0
     timeforsleep = 0
     #Узнаем проценты на команду
     for i in teams:
-        con = i
         timeforsleep += 1
         s = requests.get ( 'https://www.hltv.org' + str ( con ) )
         soup = BS ( s.content , 'html.parser' )
@@ -71,6 +69,6 @@ while True:
         if timeforsleep == 5:
             timeforsleep = 0
             print("Отдыхаем")
-            sleep(3)
+            return i
 
 
