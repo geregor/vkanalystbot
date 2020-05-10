@@ -64,12 +64,12 @@ while True:
         #print(result,rusult)
         print ( str ( teamname [ 0 ] ) + "-" + str ( teamname [ 1 ] ) )
         connection = connect()
-        with connection.cursor() as cursor :
-            resultx = cursor.execute(f"SELECT Gmatch FROM `matches` WHERE Gmatch = '{str ( teamname [ 0 ] ) + '-' + str ( teamname [ 1 ] )}' ")
-            if resultx < 1:
-                cursor.execute(f"INSERT INTO `matches`(`Gmatch`) VALUES ('{str ( teamname [ 0 ] )  +'-'+ str ( teamname [ 1 ] )}')")
-                connection.commit()
-                if int ( result [ 0 ] ) == (int ( rusult [ 0 ] )+3) :
+        if int ( result [ 0 ] ) == (int ( rusult [ 0 ] )+3) :
+            with connection.cursor() as cursor :
+                resultx = cursor.execute(f"SELECT Gmatch FROM `matches` WHERE Gmatch = '{str ( teamname [ 0 ] ) + '-' + str ( teamname [ 1 ] )}' ")
+                if resultx < 1:
+                    cursor.execute(f"INSERT INTO `matches`(`Gmatch`) VALUES ('{str ( teamname [ 0 ] )  +'-'+ str ( teamname [ 1 ] )}')")
+                    connection.commit()
                     text = ""
                     if teampercent [ 1 ] - teampercent [ 0 ] > 0 :
                         text = text + str ( teamname [ 1 ] )
