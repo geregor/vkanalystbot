@@ -51,7 +51,7 @@ while True:
         for q in soup.findAll('td', class_='spoiler'):
             #print(q.text)
             teamstatistick.append(q.text)
-        #print(teamstatistick)
+        print(teamstatistick)
         #print(str(teamname))
         teamopponent = []
         for q in soup.findAll('a', class_='text-ellipsis'):
