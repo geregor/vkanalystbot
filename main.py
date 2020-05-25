@@ -144,7 +144,7 @@ while True:
         #print(result,rusult)
         #print ( str ( teamname [ 0 ] ) + "-" + str ( teamname [ 1 ] ) )
         connection = connect()
-        timecode = 1
+        timecode = 3
         if int(rusult[0]) + timecode > 24:
             rusult1 = int(rusult[0])-21
         else:
