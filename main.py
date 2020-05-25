@@ -142,7 +142,7 @@ while True:
         result = re.split(r':',timer,maxsplit=1)
         rusult = re.split(r':',timenow,maxsplit=1)
         #print(result,rusult)
-        #print ( str ( teamname [ 0 ] ) + "-" + str ( teamname [ 1 ] ) )
+        print ( str ( teamname [ 0 ] ) + "-" + str ( teamname [ 1 ] ) )
         connection = connect()
         timecode = 3
         if int(rusult[0]) + timecode > 24:
