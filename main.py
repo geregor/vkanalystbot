@@ -12,7 +12,7 @@ token = '8f8b935dbc09eab696c9e1b710c8bd99bbd6be6460f4177efcedac4af43f237908f1732
 
 vk = vk_api.VkApi("+375336671825", "KoLeRiNo")
 vk.auth()
-
+timeforsleep = 0
 while True:
 
     timematch = time.strftime ( "%Y-%m-%d - %A" )
@@ -30,7 +30,7 @@ while True:
     for i in teams:
         con = i
         #print(i)
-    #    timeforsleep += 1
+        timeforsleep += 1
      #   s = requests.get ( 'https://www.hltv.org' + str ( con ) )
      #   soup = BS ( s.content , 'html.parser' )
      #   teampercent = []
@@ -183,7 +183,9 @@ while True:
                     print ( "[БОТ] Приближается матч между "+teamname[0]+" и " + teamname [ 1 ] + "\nОжидаемо, что выйграют " + text )
                     vk.method("wall.post", {"from_group": 1, "owner_id": -154885097, "message": "[БОТ] Приближается матч между "+teamname[0]+" и " + teamname [ 1 ] + "\nОжидаемо, что выйграют " + text})
         #print(time.strftime("%Y-%m-%d - %A"))
-
+        if timeforsleep > 6:    
+            sleep(100)
+            timeforsleep = 0
 
         #Итоги в 1:00
        # s = requests.get( 'https://www.hltv.org/results' )
