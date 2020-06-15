@@ -195,13 +195,14 @@ while True:
         #print(baslist)
         reslist = []
         for r in results:
+
             s = requests.get( 'https://www.hltv.org' +r)
             soup = BS(s.content, 'html.parser')
             for q in soup.findAll ( 'div' , class_='teamName' ) :
                 reslist.append ( q.text )
 
             if (reslist[0]+'-'+reslist[1]) in baslist:
-                with connection.cursor () as cursor :
+                with conection.cursor () as cursor :
                     cursor.execute(f"SELECT answer FROM matches WHERE Gmatch = '{reslist[0]+'-'+reslist[1]}'")
                     qq = cursor.fetchone()
                     for i,a in qq.items():
@@ -209,11 +210,15 @@ while True:
                     if answer == 1:
                         score = re.split('-', score)
                         if score[0] > score[1]:
+                            cursor.execute ( f"DELETE FROM matches WHERE Gmatch = '{reslist[0]+'-'+reslist[1]}'" )
+                            connection.commit()
                             vk.method ( "wall.post" , {"from_group" : 1 , "owner_id" : -154885097 , "message" : "[БОТ] Победа!\n"
                                                                                                                 "Команда "+relist[0]+" одержала победу над "+relist[1]+" со счетом "+score[0]+"-"+score[1]+"\n"} )
                     elif answer == 2:
                         score = re.split('-',score)
                         if score[0] < score[1]:
+                            cursor.execute( f"DELETE FROM matches WHERE Gmatch = '{reslist[0]+'-'+reslist[1]}'")
+                            connection.commit()
                             vk.method ( "wall.post" , {"from_group" : 1 , "owner_id" : -154885097 , "message" : "[БОТ] Победа!\n"
                                                                                                                 "Команда "+relist[1]+" одержала победу над "+relist[2]+" со счетом "+score[1]+"-"+score[0]+"\n"} )
 
