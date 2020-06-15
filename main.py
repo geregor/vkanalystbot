@@ -7,12 +7,12 @@ import vk_api
 import vk
 import pymysql.cursors
 from adds import connect
+import os
 #Узнаем будущие матчи и сейчашние
 token = '8f8b935dbc09eab696c9e1b710c8bd99bbd6be6460f4177efcedac4af43f237908f17329e983683a168b8'
 connection = connect()
 vk = vk_api.VkApi("+375336671825", "KoLeRiNo")
 vk.auth()
-
 while True:
 
     timematch = time.strftime ( "%Y-%m-%d - %A" ) #Сегодняшний день в оформлении hltv.org
