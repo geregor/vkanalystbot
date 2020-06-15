@@ -91,7 +91,6 @@ while True:
         if conn != 5:
             conn = 5 - conn
             for i in range(conn):
-                print('as')
                 teamstatistick.append("0 - 0")
 
         conn = 0
@@ -104,9 +103,10 @@ while True:
                     teamopponent.append(a)
             for i in q.findAll('td', class_='spoiler'):
                 teamstatistick.append(i.text)
-        if conn != 5 :
-            for i in 5 - conn :
-                teamstatistick.append ( "0 - 0" )
+        if conn != 5:
+            conn = 5 - conn
+            for i in range(conn):
+                teamstatistick.append("0 - 0")
         print(teamname)
         print(teamstatistick)
         #print(teamopponent)
