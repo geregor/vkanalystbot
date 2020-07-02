@@ -292,11 +292,11 @@ def main():
                         if i == 2:
                             vk.method("wall.post", {"from_group": 1, "owner_id": -154885097, "message": "[БОТ] Скоро начнется матч между "+teamname[0]+" и "+ teamname[1] + ".\nПредположу, что выйграют "+ text})
                         if i == 3:
-                            vk.method ( "wall.post" , {"from_group" : 1 , "owner_id" : -154885097 , "message" : "[БОТ] Совсем скоро начнется заруба между "+teamname[0]+ " и "+ teamname[1] + ".\nЗдесь должны победить "+ text)
+                            vk.method ( "wall.post" , {"from_group" : 1 , "owner_id" : -154885097 , "message" : "[БОТ] Совсем скоро начнется заруба между "+teamname[0]+ " и "+ teamname[1] + ".\nЗдесь должны победить "+ text})
                         if i == 4:
-                            vk.method ( "wall.post" , {"from_group" : 1 , "owner_id" : -154885097 , "message" : "[БОТ] Через час начнется матч между "+teamname[0]+" и "+teamname[1]+".\nДолжны выйграть "+text)
+                            vk.method ( "wall.post" , {"from_group" : 1 , "owner_id" : -154885097 , "message" : "[БОТ] Через час начнется матч между "+teamname[0]+" и "+teamname[1]+".\nДолжны выйграть "+text})
                         if i == 5:
-                            vk.method ( "wall.post" , {"from_group" : 1 , "owner_id" : -154885097 , "message" : "[БОТ] Ждем предстоящий матч между "+teamname[0]+" и "+teamname[1]+".\n Должен окончится в пользу "+text)
+                            vk.method ( "wall.post" , {"from_group" : 1 , "owner_id" : -154885097 , "message" : "[БОТ] Ждем предстоящий матч между "+teamname[0]+" и "+teamname[1]+".\n Должен окончится в пользу "+text})
         #print(time.strftime("%Y-%m-%d - %A"))
 
 while True:
