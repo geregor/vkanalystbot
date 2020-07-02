@@ -9,6 +9,7 @@ import pymysql.cursors
 from adds import connect
 from boto.s3.connection import S3Connection
 import os
+import random
 #Узнаем будущие матчи и сейчашние
 
 login = os.environ['VKLOG']
@@ -90,9 +91,8 @@ def main():
             sleep(30)
             main()
         b = a[0].findAll('table', class_='table matches')
-        for q in b[0].findAll('tr', class_='table'):
-            conn+=1
         for q in b[0].findAll('tr',class_='table'):
+            conn+=1
             for p in q.findAll ( 'a' ) :
                 result = re.search ( r'/team/' , str ( p.get('href') ) )
                 if result != None :
@@ -105,9 +105,8 @@ def main():
                 teamstatistick.append("0 - 0")
 
         conn = 0
-        for a in b[1].findAll('tr', class_='table'):
-            conn+=1
         for q in b[1].findAll('tr', class_='table'):
+            conn+=1
             for a in q.findAll('a'):
                 result = re.search(r'/team/', str(a))
                 if result != None:
@@ -256,7 +255,7 @@ def main():
 
         if  result [ 0 ]  == str(rusult1) :
             with connection.cursor() as cursor :
-                resultx = cursor.execute(f"SELECT Gmatch FROM `matches` WHERE Gmatch = '{str ( teamname [ 0 ] ) + '-' + str ( teamname [ 1 ] )}' ")
+                resultx = cursor.execute(f"SELECT Gmatch FROM matches WHERE Gmatch = '{str ( teamname [ 0 ] ) + '-' + str ( teamname [ 1 ] )}' ")
                 if resultx < 1:
                     cursor.execute(f"INSERT INTO `matches`(`Gmatch`) VALUES ('{str ( teamname [ 0 ] )  +'-'+ str ( teamname [ 1 ] )}')")
                     connection.commit()
@@ -290,17 +289,17 @@ def main():
                         text = text + str(teamname[1])
 
                     print ( "[БОТ] Приближается матч между "+teamname[0]+" и " + teamname [ 1 ] + "\nОжидаемо, что выйграют " + text )
-                    for i in range(5):
-                        if i == 1:
-                            vk.method("wall.post", {"from_group": 1, "owner_id": -154885097, "message": "[БОТ] Приближается матч между "+teamname[0]+" и " + teamname [ 1 ] + ".\nОжидаемо, что выйграют " + text})
-                        if i == 2:
-                            vk.method("wall.post", {"from_group": 1, "owner_id": -154885097, "message": "[БОТ] Скоро начнется матч между "+teamname[0]+" и "+ teamname[1] + ".\nПредположу, что выйграют "+ text})
-                        if i == 3:
-                            vk.method ( "wall.post" , {"from_group" : 1 , "owner_id" : -154885097 , "message" : "[БОТ] Совсем скоро начнется заруба между "+teamname[0]+ " и "+ teamname[1] + ".\nЗдесь должны победить "+ text})
-                        if i == 4:
-                            vk.method ( "wall.post" , {"from_group" : 1 , "owner_id" : -154885097 , "message" : "[БОТ] Через час начнется матч между "+teamname[0]+" и "+teamname[1]+".\nДолжны выйграть "+text})
-                        if i == 5:
-                            vk.method ( "wall.post" , {"from_group" : 1 , "owner_id" : -154885097 , "message" : "[БОТ] Ждем предстоящий матч между "+teamname[0]+" и "+teamname[1]+".\n Должен окончится в пользу "+text})
+                    random = random.randint(0,5)
+                    if random == 1:
+                        vk.method("wall.post", {"from_group": 1, "owner_id": -154885097, "message": "[БОТ] Приближается матч между "+teamname[0]+" и " + teamname [ 1 ] + ".\nОжидаемо, что выйграют " + text})
+                    elif random == 2:
+                        vk.method("wall.post", {"from_group": 1, "owner_id": -154885097, "message": "[БОТ] Скоро начнется матч между "+teamname[0]+" и "+ teamname[1] + ".\nПредположу, что выйграют "+ text})
+                    elif random == 3:
+                        vk.method ( "wall.post" , {"from_group" : 1 , "owner_id" : -154885097 , "message" : "[БОТ] Совсем скоро начнется заруба между "+teamname[0]+ " и "+ teamname[1] + ".\nЗдесь должны победить "+ text})
+                    elif random == 4:
+                        vk.method ( "wall.post" , {"from_group" : 1 , "owner_id" : -154885097 , "message" : "[БОТ] Через час начнется матч между "+teamname[0]+" и "+teamname[1]+".\nДолжны выйграть "+text})
+                    elif random == 5:
+                        vk.method ( "wall.post" , {"from_group" : 1 , "owner_id" : -154885097 , "message" : "[БОТ] Ждем предстоящий матч между "+teamname[0]+" и "+teamname[1]+".\n Должен окончится в пользу "+text})
         #print(time.strftime("%Y-%m-%d - %A"))
 
 while True:
