@@ -11,8 +11,8 @@ from boto.s3.connection import S3Connection
 import os
 #Узнаем будущие матчи и сейчашние
 
-login = S3Connection(os.environ['VKLOG'])
-password = S3Connection(os.environ['VKPASS'])
+login = os.environ['VKLOG']
+password = os.environ['VKPASS']
 
 token = '8f8b935dbc09eab696c9e1b710c8bd99bbd6be6460f4177efcedac4af43f237908f17329e983683a168b8'
 connection = connect()
