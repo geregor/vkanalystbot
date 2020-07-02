@@ -8,6 +8,7 @@ import vk
 import pymysql.cursors
 from adds import connect
 from boto.s3.connection import S3Connection
+import os
 #Узнаем будущие матчи и сейчашние
 
 login = S3Connection(os.environ['VKLOG'])
