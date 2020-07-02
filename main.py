@@ -86,6 +86,9 @@ def main():
         conn = 0
         teamopponent = []
         a = soup.findAll('div', class_='past-matches')
+        if a == []:
+            sleep(30)
+            main()
         b = a[0].findAll('table', class_='table matches')
         for q in b[0].findAll('tr', class_='table'):
             conn+=1
