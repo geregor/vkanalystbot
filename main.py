@@ -7,13 +7,18 @@ import vk_api
 import vk
 import pymysql.cursors
 from adds import connect
-import os
+from boto.s3.connection import S3Connection
 #Узнаем будущие матчи и сейчашние
+
+login = S3Connection(os.environ['VKLOG'])
+password = S3Connection(os.environ['VKPASS'])
+
 token = '8f8b935dbc09eab696c9e1b710c8bd99bbd6be6460f4177efcedac4af43f237908f17329e983683a168b8'
 connection = connect()
-vk = vk_api.VkApi("+375336671825", "KoLeRiNo")
+vk = vk_api.VkApi(login, password)
 vk.auth()
-while True:
+
+def main():
 
     timematch = time.strftime ( "%Y-%m-%d - %A" ) #Сегодняшний день в оформлении hltv.org
     r = requests.get('https://www.hltv.org/matches')
@@ -45,9 +50,7 @@ while True:
     for i in teams:
         con = i
 
-        #Узнаем проценты на команду
-
-        #print(i)
+        #Узнаем проценты на командуs
     #    timeforsleep += 1
      #   s = requests.get ( 'https://www.hltv.org' + str ( con ) )
      #   soup = BS ( s.content , 'html.parser' )
@@ -62,11 +65,15 @@ while True:
 
         #Получение названия команды
 
-        s = requests.get ( 'https://www.hltv.org' + str ( con ) )
+        s = requests.get ( 'https://www.hltv.org' +  con  )
         soup = BS ( s.content , 'html.parser' ) #Парсим название команды
         teamname = []
         for q in soup.findAll('div', class_='teamName'): #Ищем div с классом teamName
             teamname.append(q.text) #Записываем название команды в массив
+        if "''" in str(teamname):
+            print('Произошел прикол - ждите 1 минуту 40 секунд')
+            time.sleep(100)
+            main()
         teamstatistick = []
 
         #Прошлые результаты команд
@@ -77,15 +84,15 @@ while True:
 
         conn = 0
         teamopponent = []
-        b = soup.findAll('table', class_='table matches')
-
-        for a in b[0].findAll('tr', class_='table'):
+        a = soup.findAll('div', class_='past-matches')
+        b = a[0].findAll('table', class_='table matches')
+        for q in b[0].findAll('tr', class_='table'):
             conn+=1
         for q in b[0].findAll('tr',class_='table'):
-            for a in q.findAll ( 'a' ) :
-                result = re.search ( r'/team/' , str ( a.get('href') ) )
+            for p in q.findAll ( 'a' ) :
+                result = re.search ( r'/team/' , str ( p.get('href') ) )
                 if result != None :
-                    teamopponent.append ( a )
+                    teamopponent.append ( p )
             for i in q.findAll('td', class_='spoiler'):
                 teamstatistick.append(i.text)
         if conn != 5:
@@ -185,42 +192,42 @@ while True:
                                     teamtoptwo = (b.text).replace ( "#" , "" )
         #Результаты!
         #resultname
-        baslist = []
-        with connection.cursor () as cursor :
-            row = cursor.execute(f"SELECT Gmatch FROM matches WHERE 1 ")
-            for q in range(row):
-                qq = cursor.fetchone()
-                for i,a in qq.items():
-                    baslist.append(a)
+        #baslist = []
+        #with connection.cursor () as cursor :
+        #    row = cursor.execute(f"SELECT Gmatch FROM matches WHERE 1 ")
+        #    for q in range(row):
+        #        qq = cursor.fetchone()
+        #        for i,a in qq.items():
+        #            baslist.append(a)
         #print(baslist)
-        reslist = []
-        for r in results:
+        #reslist = []
+        #for r in results:
 
-            s = requests.get( 'https://www.hltv.org' +r)
-            soup = BS(s.content, 'html.parser')
-            for q in soup.findAll ( 'div' , class_='teamName' ) :
-                reslist.append ( q.text )
+        #    s = requests.get( 'https://www.hltv.org' +r)
+        #    soup = BS(s.content, 'html.parser')
+        #    for q in soup.findAll ( 'div' , class_='teamName' ) :
+        #        reslist.append ( q.text )
 
-            if (reslist[0]+'-'+reslist[1]) in baslist:
-                with connection.cursor () as cursor :
-                    cursor.execute(f"SELECT answer FROM matches WHERE Gmatch = '{reslist[0]+'-'+reslist[1]}'")
-                    qq = cursor.fetchone()
-                    for i,a in qq.items():
-                        answer = a
-                    if answer == 1:
-                        result = re.split(r'-', score,maxsplit=1)
-                        if result[0] > result[1]:
-                            cursor.execute ( f"DELETE FROM matches WHERE Gmatch = '{reslist[0]+'-'+reslist[1]}'" )
-                            connection.commit()
-                            vk.method ( "wall.post" , {"from_group" : 1 , "owner_id" : -154885097 , "message" : "[БОТ] Победа!\n"
-                                                                                                                "Команда "+relist[0]+" одержала победу над "+relist[1]+" со счетом "+result[0]+"-"+result[1]+"\n"} )
-                    elif answer == 2:
-                        result = re.split(r'-',score,maxsplit=1)
-                        if result[0] < result[1]:
-                            cursor.execute( f"DELETE FROM matches WHERE Gmatch = '{reslist[0]+'-'+reslist[1]}'")
-                            connection.commit()
-                            vk.method ( "wall.post" , {"from_group" : 1 , "owner_id" : -154885097 , "message" : "[БОТ] Проигрыш...\n"
-                                                                                                                "Команда "+relist[1]+" проиграла команде "+relist[2]+" со счетом "+result[0]+"-"+result[1]+"\n"} )
+        #   if (reslist[0]+'-'+reslist[1]) in baslist:
+        #       with connection.cursor () as cursor :
+        #            cursor.execute(f"SELECT answer FROM matches WHERE Gmatch = '{reslist[0]+'-'+reslist[1]}'")
+        #            qq = cursor.fetchone()
+        #            for i,a in qq.items():
+        #                answer = a
+        #            if answer == 1:
+        #                result = re.split(r'-', score,maxsplit=1)
+        #                if result[0] > result[1]:
+        #                    cursor.execute ( f"DELETE FROM matches WHERE Gmatch = '{reslist[0]+'-'+reslist[1]}'" )
+        #                    connection.commit()
+        #                    vk.method ( "wall.post" , {"from_group" : 1 , "owner_id" : -154885097 , "message" : "[БОТ] Победа!\n"
+        #                                                                                                        "Команда "+relist[0]+" одержала победу над "+relist[1]+" со счетом "+result[0]+"-"+result[1]+"\n"} )
+        #            elif answer == 2:
+        #                result = re.split(r'-',score,maxsplit=1)
+        #                if result[0] < result[1]:
+        #                    cursor.execute( f"DELETE FROM matches WHERE Gmatch = '{reslist[0]+'-'+reslist[1]}'")
+        #                    connection.commit()
+        #                    vk.method ( "wall.post" , {"from_group" : 1 , "owner_id" : -154885097 , "message" : "[БОТ] Проигрыш...\n"
+        #                                                                                                        "Команда "+relist[1]+" проиграла команде "+relist[2]+" со счетом "+result[0]+"-"+result[1]+"\n"} )
 
         #Получение времени
         timenow = time.strftime("%H:%M")
@@ -236,13 +243,14 @@ while True:
         rusult = re.split(r':',timenow,maxsplit=1)
         #print(result,rusult)
         #print ( str ( teamname [ 0 ] ) + "-" + str ( teamname [ 1 ] ) )
-
+        sleep(10)
         timecode = 3
         if int(rusult[0]) + timecode > 24:
             rusult1 = int(rusult[0])-21
         else:
             rusult1 = int(rusult[0])+timecode
-        if int ( result [ 0 ])  == rusult1 :
+
+        if  result [ 0 ]  == str(rusult1) :
             with connection.cursor() as cursor :
                 resultx = cursor.execute(f"SELECT Gmatch FROM `matches` WHERE Gmatch = '{str ( teamname [ 0 ] ) + '-' + str ( teamname [ 1 ] )}' ")
                 if resultx < 1:
@@ -278,10 +286,21 @@ while True:
                         text = text + str(teamname[1])
 
                     print ( "[БОТ] Приближается матч между "+teamname[0]+" и " + teamname [ 1 ] + "\nОжидаемо, что выйграют " + text )
-                    vk.method("wall.post", {"from_group": 1, "owner_id": -154885097, "message": "[БОТ] Приближается матч между "+teamname[0]+" и " + teamname [ 1 ] + "\nОжидаемо, что выйграют " + text})
+                    for i in range(5):
+                        if i == 1:
+                            vk.method("wall.post", {"from_group": 1, "owner_id": -154885097, "message": "[БОТ] Приближается матч между "+teamname[0]+" и " + teamname [ 1 ] + ".\nОжидаемо, что выйграют " + text})
+                        if i == 2:
+                            vk.method("wall.post", {"from_group": 1, "owner_id": -154885097, "message": "[БОТ] Скоро начнется матч между "+teamname[0]+" и "+ teamname[1] + ".\nПредположу, что выйграют "+ text})
+                        if i == 3:
+                            vk.method ( "wall.post" , {"from_group" : 1 , "owner_id" : -154885097 , "message" : "[БОТ] Совсем скоро начнется заруба между "+teamname[0]+ " и "+ teamname[1] + ".\nЗдесь должны победить "+ text)
+                        if i == 4:
+                            vk.method ( "wall.post" , {"from_group" : 1 , "owner_id" : -154885097 , "message" : "[БОТ] Через час начнется матч между "+teamname[0]+" и "+teamname[1]+".\nДолжны выйграть "+text)
+                        if i == 5:
+                            vk.method ( "wall.post" , {"from_group" : 1 , "owner_id" : -154885097 , "message" : "[БОТ] Ждем предстоящий матч между "+teamname[0]+" и "+teamname[1]+".\n Должен окончится в пользу "+text)
         #print(time.strftime("%Y-%m-%d - %A"))
 
-
+while True:
+    main()
         #Итоги в 1:00
        # s = requests.get( 'https://www.hltv.org/results' )
        # soup = BS (s.content , 'html.parser')
