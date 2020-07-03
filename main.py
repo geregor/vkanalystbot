@@ -246,7 +246,6 @@ def main():
         rusult = re.split(r':',timenow,maxsplit=1)
         #print(result,rusult)
         #print ( str ( teamname [ 0 ] ) + "-" + str ( teamname [ 1 ] ) )
-        sleep(10)
         timecode = 3
         if int(rusult[0]) + timecode > 24:
             rusult1 = int(rusult[0])-21
@@ -289,7 +288,7 @@ def main():
                         text = text + str(teamname[1])
 
                     print ( "[БОТ] Приближается матч между "+teamname[0]+" и " + teamname [ 1 ] + "\nОжидаемо, что выйграют " + text )
-                    random = random.randint(0,5)
+                    random = 3
                     if random == 1:
                         vk.method("wall.post", {"from_group": 1, "owner_id": -154885097, "message": "[БОТ] Приближается матч между "+teamname[0]+" и " + teamname [ 1 ] + ".\nОжидаемо, что выйграют " + text})
                     elif random == 2:
