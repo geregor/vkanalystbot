@@ -288,16 +288,16 @@ def main():
                         text = text + str(teamname[1])
 
                     print ( "[БОТ] Приближается матч между "+teamname[0]+" и " + teamname [ 1 ] + "\nОжидаемо, что выйграют " + text )
-                    random = 3
-                    if random == 1:
+                    rando = random.randint(0,5)
+                    if rando == 1:
                         vk.method("wall.post", {"from_group": 1, "owner_id": -154885097, "message": "[БОТ] Приближается матч между "+teamname[0]+" и " + teamname [ 1 ] + ".\nОжидаемо, что выйграют " + text})
-                    elif random == 2:
+                    elif rando == 2:
                         vk.method("wall.post", {"from_group": 1, "owner_id": -154885097, "message": "[БОТ] Скоро начнется матч между "+teamname[0]+" и "+ teamname[1] + ".\nПредположу, что выйграют "+ text})
-                    elif random == 3:
+                    elif rando == 3:
                         vk.method ( "wall.post" , {"from_group" : 1 , "owner_id" : -154885097 , "message" : "[БОТ] Совсем скоро начнется заруба между "+teamname[0]+ " и "+ teamname[1] + ".\nЗдесь должны победить "+ text})
-                    elif random == 4:
+                    elif rando == 4:
                         vk.method ( "wall.post" , {"from_group" : 1 , "owner_id" : -154885097 , "message" : "[БОТ] Через час начнется матч между "+teamname[0]+" и "+teamname[1]+".\nДолжны выйграть "+text})
-                    elif random == 5:
+                    elif rando == 5:
                         vk.method ( "wall.post" , {"from_group" : 1 , "owner_id" : -154885097 , "message" : "[БОТ] Ждем предстоящий матч между "+teamname[0]+" и "+teamname[1]+".\n Должен окончится в пользу "+text})
         #print(time.strftime("%Y-%m-%d - %A"))
 
