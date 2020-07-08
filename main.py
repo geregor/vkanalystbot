@@ -89,6 +89,9 @@ def main():
         a = soup.findAll('div', class_='past-matches')
         if a == []:
             sleep(30)
+            with connection.cursor () as cursor :
+                cursor.execute(f"DELETE FROM `matches` WHERE 1")
+                connection.commit()
             main()
         b = a[0].findAll('table', class_='table matches')
         for q in b[0].findAll('tr',class_='table'):
@@ -246,6 +249,7 @@ def main():
         rusult = re.split(r':',timenow,maxsplit=1)
         #print(result,rusult)
         #print ( str ( teamname [ 0 ] ) + "-" + str ( teamname [ 1 ] ) )
+        sleep(10)
         timecode = 3
         if int(rusult[0]) + timecode > 24:
             rusult1 = int(rusult[0])-21
@@ -288,16 +292,16 @@ def main():
                         text = text + str(teamname[1])
 
                     print ( "[БОТ] Приближается матч между "+teamname[0]+" и " + teamname [ 1 ] + "\nОжидаемо, что выйграют " + text )
-                    rando = random.randint(0,5)
-                    if rando == 1:
+                    random = random.randint(0,5)
+                    if random == 1:
                         vk.method("wall.post", {"from_group": 1, "owner_id": -154885097, "message": "[БОТ] Приближается матч между "+teamname[0]+" и " + teamname [ 1 ] + ".\nОжидаемо, что выйграют " + text})
-                    elif rando == 2:
+                    elif random == 2:
                         vk.method("wall.post", {"from_group": 1, "owner_id": -154885097, "message": "[БОТ] Скоро начнется матч между "+teamname[0]+" и "+ teamname[1] + ".\nПредположу, что выйграют "+ text})
-                    elif rando == 3:
+                    elif random == 3:
                         vk.method ( "wall.post" , {"from_group" : 1 , "owner_id" : -154885097 , "message" : "[БОТ] Совсем скоро начнется заруба между "+teamname[0]+ " и "+ teamname[1] + ".\nЗдесь должны победить "+ text})
-                    elif rando == 4:
+                    elif random == 4:
                         vk.method ( "wall.post" , {"from_group" : 1 , "owner_id" : -154885097 , "message" : "[БОТ] Через час начнется матч между "+teamname[0]+" и "+teamname[1]+".\nДолжны выйграть "+text})
-                    elif rando == 5:
+                    elif random == 5:
                         vk.method ( "wall.post" , {"from_group" : 1 , "owner_id" : -154885097 , "message" : "[БОТ] Ждем предстоящий матч между "+teamname[0]+" и "+teamname[1]+".\n Должен окончится в пользу "+text})
         #print(time.strftime("%Y-%m-%d - %A"))
 
