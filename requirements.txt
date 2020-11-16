@@ -3,3 +3,5 @@ vk
 bs4
 pymysql
 boto
+pyTelegramBotApi
+fake_useragent
