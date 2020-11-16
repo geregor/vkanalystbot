@@ -2,16 +2,12 @@ import pymysql.cursors
 from boto.s3.connection import S3Connection
 import os
 
-hostt = os.environ['HOST']
-usert = os.environ['USER']
-passwordt = os.environ['PASS']
-
 def connect():
     connection = pymysql.connect(
-        host=hostt,
-        user=usert,
-        password=passwordt,
-        db=usert,
+        host='remotemysql.com',
+        user='VcJhVl8VY9',
+        password='2szV2WF4BO',
+        db='VcJhVl8VY9',
         charset='utf8mb4',
         cursorclass=pymysql.cursors.DictCursor)
     return connection
