@@ -1,7 +1,6 @@
 vk_api
 vk
 bs4
-pymysql
 boto
 pyTelegramBotApi
 fake_useragent
