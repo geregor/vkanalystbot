@@ -1,6 +1,11 @@
 import pymysql.cursors
-from boto.s3.connection import S3Connection
-import os
+
+#Username: VcJhVl8VY9
+#Database name: VcJhVl8VY9
+#Password: 2szV2WF4BO
+#Server: remotemysql.com
+#Port: 3306
+#These are the username and password to log in to your database and phpMyAdmin
 
 def connect():
     connection = pymysql.connect(
@@ -12,7 +17,3 @@ def connect():
         cursorclass=pymysql.cursors.DictCursor)
     return connection
 
-# Тир 1 - 1-7
-# Тир 2 - 8-15
-# Тир 3 - 16-25
-# Тир 4 - 26 - ...
