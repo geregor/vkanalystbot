@@ -5,8 +5,6 @@ from time import sleep
 import time
 import vk_api
 import vk
-import pymysql.cursors
-from adds import connect
 from boto.s3.connection import S3Connection
 import os
 from fake_useragent import UserAgent
@@ -96,11 +94,11 @@ def main():
         #else:
           #  sleep(1)
            # main()
-            
+
             try:
                 dstats1 = (float(stats[0]) + float(stats[1]) + float(stats[2]) + float(stats[3]) + float(stats[4]))/5
                 dstats2 = (float(stats[5]) + float(stats[6]) + float(stats[7]) + float(stats[8]) + float(stats[9]))/5
-            except:
+            except Exception:
                 sleep(15)
                 main()
 
@@ -127,7 +125,7 @@ def main():
             print (dmat1,dmat2 )
             print("------------------------------")
         #print(len(stats))
-    sleep(10)
+    sleep(120)
 
 
 
