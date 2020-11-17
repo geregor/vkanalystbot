@@ -11,8 +11,27 @@ from boto.s3.connection import S3Connection
 import os
 from fake_useragent import UserAgent
 import telebot
+import sqlite3
 UserAgent().chrome
 
+conn = sqlite3.connect(":memory:") # или :memory: чтобы сохранить в RAM
+cursor = conn.cursor()
+# Создание таблицы
+cursor.execute("""CREATE TABLE bot
+                  (game text)
+               """)
+
+#cursor.execute(f"""INSERT INTO bot VALUES ('SASKE')""")
+
+#print(cursor.execute(f"SELECT game FROM bot WHERE game = '333'").fetchone())
+def bdinsert(what):
+    if cursor.execute(f"SELECT game FROM bot WHERE game = '{what}'").fetchone() == None:
+        cursor.execute(f"""INSERT INTO bot VALUES ('{what}')""")
+        return None
+    else:
+        return 1
+    conn.commit()
+#print(cursor.execute("SELECT * FROM bot").fetchall())
 bot = telebot.TeleBot("1486092253:AAFVMoBeQ5MTKL0kNSiCocp7dVmayYPwNoY")
 #response = requests.get(page_link, headers={'User-Agent': UserAgent().chrome})
 
@@ -65,7 +84,7 @@ def main():
             #maps = ['-','10.23']
             for i in soup.findAll('div', class_='name'):
                 name.append(i.text)
-            #print(name)
+            print(name)
             #print(stats)
             #print ( teams )
             if len(stats) > 10:
@@ -77,25 +96,38 @@ def main():
         #else:
           #  sleep(1)
            # main()
+            
+            try:
+                dstats1 = (float(stats[0]) + float(stats[1]) + float(stats[2]) + float(stats[3]) + float(stats[4]))/5
+                dstats2 = (float(stats[5]) + float(stats[6]) + float(stats[7]) + float(stats[8]) + float(stats[9]))/5
+            except:
+                sleep(15)
+                main()
 
-            dstats1 = (float(stats[0]) + float(stats[1]) + float(stats[2]) + float(stats[3]) + float(stats[4]))/5
-            dstats2 = (float(stats[5]) + float(stats[6]) + float(stats[7]) + float(stats[8]) + float(stats[9]))/5
             dmat1 = float(maps[0])*dstats1
             dmat2 = float(maps[1])*dstats2
-            if dstats1 > dstats2 and dmat1 > dmat2:
-                print("1")
-                bot.send_message("@mlg_betbot", "Cтавка от бота:\n" +name[0]+" - "+name[1]+"\n"
+            match = name[0] + " - " + name[1]
+            try:
+                if bdinsert(match) == None:
+                    if dstats1 > dstats2 and dmat1 > dmat2:
+                        print("1")
+                        bot.send_message("@mlg_betbot", "Cтавка от бота:\n" +name[0]+" - "+name[1]+"\n"
                                                                        "Ставка: Победа "+name[0])
 
-            elif dstats1 < dstats2 and dmat1 < dmat2:
-                print("2")
-                bot.send_message("@mlg_betbot", "Cтавка от бота:\n"
+
+                    elif dstats1 < dstats2 and dmat1 < dmat2:
+                        print("2")
+                        bot.send_message("@mlg_betbot", "Cтавка от бота:\n"
                                                 +name[0]+" - "+name[1]+"\n"
                                                                        "Ставка: Победа "+name[1])
+
+            finally:
+                print("")
             print(dstats1, dstats2)
             print (dmat1,dmat2 )
+            print("------------------------------")
         #print(len(stats))
-
+    sleep(10)
 
 
 
