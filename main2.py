@@ -98,13 +98,14 @@ def main():
             try:
                 dstats1 = (float(stats[0]) + float(stats[1]) + float(stats[2]) + float(stats[3]) + float(stats[4]))/5
                 dstats2 = (float(stats[5]) + float(stats[6]) + float(stats[7]) + float(stats[8]) + float(stats[9]))/5
+                dmat1 = float ( maps [ 0 ] )*dstats1
+                dmat2 = float ( maps [ 1 ] )*dstats2
+                match = name [ 0 ] + " - " + name [ 1 ]
             except Exception:
                 sleep(15)
                 main()
 
-            dmat1 = float(maps[0])*dstats1
-            dmat2 = float(maps[1])*dstats2
-            match = name[0] + " - " + name[1]
+
             try:
                 if bdinsert(match) == None:
                     if dstats1 > dstats2 and dmat1 > dmat2:
