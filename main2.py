@@ -114,7 +114,7 @@ def main():
                                                                        "Ставка: Победа "+name[0])
 
 
-                    elif dstats1 < dstats2 and dmat1 < dmat2:
+                    if dstats1 < dstats2 and dmat1 < dmat2:
                         print("2")
                         bot.send_message("@mlg_betbot", "Cтавка от бота:\n"
                                                 +name[0]+" - "+name[1]+"\n"
