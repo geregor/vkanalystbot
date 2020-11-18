@@ -25,9 +25,12 @@ cursor.execute("""CREATE TABLE bot
 def bdinsert(what):
     if cursor.execute(f"SELECT game FROM bot WHERE game = '{what}'").fetchone() == None:
         cursor.execute(f"""INSERT INTO bot VALUES ('{what}')""")
+        print("none")
         return None
     else:
+        print("1")
         return 1
+        
     conn.commit()
 #print(cursor.execute("SELECT * FROM bot").fetchall())
 bot = telebot.TeleBot("1486092253:AAFVMoBeQ5MTKL0kNSiCocp7dVmayYPwNoY")
