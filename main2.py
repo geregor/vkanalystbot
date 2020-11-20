@@ -25,13 +25,23 @@ cursor.execute("""CREATE TABLE bot
 def bdinsert(what):
     if cursor.execute(f"SELECT game FROM bot WHERE game = '{what}'").fetchone() == None:
         cursor.execute(f"""INSERT INTO bot VALUES ('{what}')""")
-        print("none")
         return None
     else:
-        print("1")
         return 1
-        
     conn.commit()
+
+def register(what):
+	try:
+		result = cursor.execute(f"SELECT * FROM bot WHERE game='{what}'")
+		row = cursor.fetchone()
+		if result == 0:
+			cursor.execute(f"INSERT INTO bot(game) VALUES('{what}')")
+			conn.commit()
+		else:
+			return row
+	finally:
+		conn.commit()
+
 #print(cursor.execute("SELECT * FROM bot").fetchall())
 bot = telebot.TeleBot("1486092253:AAFVMoBeQ5MTKL0kNSiCocp7dVmayYPwNoY")
 #response = requests.get(page_link, headers={'User-Agent': UserAgent().chrome})
@@ -112,14 +122,14 @@ def main():
             try:
                 if bdinsert(match) == None:
                     if dstats1 > dstats2 and dmat1 > dmat2:
-                        print("1")
-                        bot.send_message("@mlg_betbot", "Cтавка от бота:\n" +name[0]+" - "+name[1]+"\n"
+                        if register(match) != None:
+                            bot.send_message("@mlg_betbot", "Cтавка от бота:\n" +name[0]+" - "+name[1]+"\n"
                                                                        "Ставка: Победа "+name[0])
 
 
-                    if dstats1 < dstats2 and dmat1 < dmat2:
-                        print("2")
-                        bot.send_message("@mlg_betbot", "Cтавка от бота:\n"
+                    elif dstats1 < dstats2 and dmat1 < dmat2:
+                        if register(match) != None:
+                            bot.send_message("@mlg_betbot", "Cтавка от бота:\n"
                                                 +name[0]+" - "+name[1]+"\n"
                                                                        "Ставка: Победа "+name[1])
 
@@ -129,10 +139,11 @@ def main():
             print (dmat1,dmat2 )
             print("------------------------------")
         #print(len(stats))
-    sleep(120)
+
 
 
 
 
 while __name__ == '__main__':
     main()
+    sleep(120)
