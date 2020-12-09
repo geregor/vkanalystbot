@@ -45,7 +45,7 @@ bot = telebot.TeleBot("1486092253:AAFVMoBeQ5MTKL0kNSiCocp7dVmayYPwNoY")
 
 
 def main():
-    timematch = time.strftime ( "%Y-%m-10" )  # Сегодняшний день в оформлении hltv.org
+    timematch = time.strftime ( "%Y-%m-11" )  # Сегодняшний день в оформлении hltv.org
    # timematch = time.strftime ( "%A - %Y-%m-10" )  # Сегодняшний день в оформлении hltv.org
     #print(timematch)
 
