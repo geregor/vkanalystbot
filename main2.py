@@ -12,12 +12,9 @@ import telebot
 import sqlite3
 UserAgent().chrome
 
-conn = sqlite3.connect(":memory:") # или :memory: чтобы сохранить в RAM
+conn = sqlite3.connect("server.db") # или :memory: чтобы сохранить в RAM
 cursor = conn.cursor()
 # Создание таблицы
-cursor.execute("""CREATE TABLE bot
-                  (game text)
-               """)
 
 #cursor.execute(f"""INSERT INTO bot VALUES ('SASKE')""")
 
@@ -48,8 +45,8 @@ bot = telebot.TeleBot("1486092253:AAFVMoBeQ5MTKL0kNSiCocp7dVmayYPwNoY")
 
 
 def main():
-
-    timematch = time.strftime ( "%A - %Y-%m-%d" )  # Сегодняшний день в оформлении hltv.org
+    timematch = time.strftime ( "%Y-%m-10" )  # Сегодняшний день в оформлении hltv.org
+   # timematch = time.strftime ( "%A - %Y-%m-10" )  # Сегодняшний день в оформлении hltv.org
     #print(timematch)
 
 
@@ -65,7 +62,7 @@ def main():
                 result = re.search ( r'/betting' , str ( a ) )  # Проверяет ссылку по очереди на ту что с матчем
                 if result != None  and len(teams) != 7:  # Если пооски не пустые, то записываем команду в массив
                     teams.append ( a.get ( 'href' ) )
-
+    print(teams)
     if teams != []:
         for i in teams:
             stats = [ ]
@@ -95,7 +92,7 @@ def main():
             #maps = ['-','10.23']
             for i in soup.findAll('div', class_='name'):
                 name.append(i.text)
-            print(name)
+            #print(name)
             #print(stats)
             #print ( teams )
             if len(stats) > 10:
@@ -111,32 +108,33 @@ def main():
             try:
                 dstats1 = (float(stats[0]) + float(stats[1]) + float(stats[2]) + float(stats[3]) + float(stats[4]))/5
                 dstats2 = (float(stats[5]) + float(stats[6]) + float(stats[7]) + float(stats[8]) + float(stats[9]))/5
-                dmat1 = float ( maps [ 0 ] )*dstats1
-                dmat2 = float ( maps [ 1 ] )*dstats2
+                #dmat1 = float ( maps [ 0 ] )*dstats1
+                #dmat2 = float ( maps [ 1 ] )*dstats2
                 match = name [ 0 ] + " - " + name [ 1 ]
             except Exception:
                 sleep(15)
                 main()
+            cursor.execute(f"SELECT * FROM bot")
 
-
+            kok = len(cursor.fetchall())+1
             try:
                 if bdinsert(match) == None:
-                    if dstats1 > dstats2 and dmat1 > dmat2:
+                    if dstats1 > dstats2:
                         if register(match) != None:
-                            bot.send_message("@mlg_betbot", "Cтавка от бота:\n" +name[0]+" - "+name[1]+"\n"
+                            bot.send_message("@mlg_betbot", "#"+str(kok)+" Cтавка от бота:\n" +name[0]+" - "+name[1]+"\n"
                                                                        "Ставка: Победа "+name[0])
 
 
-                    elif dstats1 < dstats2 and dmat1 < dmat2:
+                    elif dstats1 < dstats2:
                         if register(match) != None:
-                            bot.send_message("@mlg_betbot", "Cтавка от бота:\n"
+                            bot.send_message("@mlg_betbot", "#"+str(kok)+"Cтавка от бота:\n"
                                                 +name[0]+" - "+name[1]+"\n"
                                                                        "Ставка: Победа "+name[1])
 
             finally:
                 print("")
             print(dstats1, dstats2)
-            print (dmat1,dmat2 )
+            #print (dmat1,dmat2 )
             print("------------------------------")
         #print(len(stats))
 
