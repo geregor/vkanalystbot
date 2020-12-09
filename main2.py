@@ -45,7 +45,7 @@ bot = telebot.TeleBot("1486092253:AAFVMoBeQ5MTKL0kNSiCocp7dVmayYPwNoY")
 
 
 def main():
-    timematch = time.strftime ( "%Y-%m-11" )  # Сегодняшний день в оформлении hltv.org
+    timematch = time.strftime ( "%Y-%m-12" )  # Сегодняшний день в оформлении hltv.org
    # timematch = time.strftime ( "%A - %Y-%m-10" )  # Сегодняшний день в оформлении hltv.org
     #print(timematch)
 
@@ -62,7 +62,7 @@ def main():
                 result = re.search ( r'/betting' , str ( a ) )  # Проверяет ссылку по очереди на ту что с матчем
                 if result != None  and len(teams) != 7:  # Если пооски не пустые, то записываем команду в массив
                     teams.append ( a.get ( 'href' ) )
-    print(teams)
+    #print(teams)
     if teams != []:
         for i in teams:
             stats = [ ]
