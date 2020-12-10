@@ -100,43 +100,44 @@ def main():
 
             if len(stats) == 0:
                 main()
-            
-            try:
-                dstats1 = (float(stats[0]) + float(stats[1]) + float(stats[2]) + float(stats[3]) + float(stats[4]))/5
-                dstats2 = (float(stats[5]) + float(stats[6]) + float(stats[7]) + float(stats[8]) + float(stats[9]))/5
-                #for i in stats(range(5)):
-                 #   dstats1 = dstats + int(i)
-                #dstats2 = sum(int(stats[5]), int(stats[6]), int(stats[7]), int(stats[8]), int(stats[9]))/5
-                #dstats1 = sum(int(stats[0]), int(stats[1]), int(stats[2]), int(stats[3]), int(stats[4]))/5
-                #dmat1 = float ( maps [ 0 ] )*dstats1
-                #dmat2 = float ( maps [ 1 ] )*dstats2
-                match = name [ 0 ] + " - " + name [ 1 ]
-            except Exception:
-                print("Случился краш")
-                sleep(15)
-                main()
-            print(match)
-            cursor.execute(f"SELECT * FROM bot")
+            if c == True:
+                try:
+                    dstats1 = (float(stats[0]) + float(stats[1]) + float(stats[2]) + float(stats[3]) + float(stats[4]))/5
+                    dstats2 = (float(stats[5]) + float(stats[6]) + float(stats[7]) + float(stats[8]) + float(stats[9]))/5
+                    #for i in stats(range(5)):
+                     #   dstats1 = dstats + int(i)
+                    #dstats2 = sum(int(stats[5]), int(stats[6]), int(stats[7]), int(stats[8]), int(stats[9]))/5
+                    #dstats1 = sum(int(stats[0]), int(stats[1]), int(stats[2]), int(stats[3]), int(stats[4]))/5
+                    #dmat1 = float ( maps [ 0 ] )*dstats1
+                    #dmat2 = float ( maps [ 1 ] )*dstats2
+                    match = name [ 0 ] + " - " + name [ 1 ]
+                except Exception:
+                    print("Случился краш")
+                    sleep(15)
+                    main()
+                print(match)
+                cursor.execute(f"SELECT * FROM bot")
 
-            kok = len(cursor.fetchall())+1
 
-            try:
-                if bdinsert(match) == None and c == True:
-                    if dstats1 > dstats2:
-                        if register(match) != None:
-                            bot.send_message("@mlg_betbot", "#"+str(kok)+" Cтавка от бота:\n" +name[0]+" - "+name[1]+"\n"
+
+                try:
+                    if bdinsert(match) == None:
+                        kok = len ( cursor.fetchall () ) + 1
+                        if dstats1 > dstats2:
+                            if register(match) != None:
+                                bot.send_message("@mlg_betbot", "#"+str(kok)+" Cтавка от бота:\n" +name[0]+" - "+name[1]+"\n"
                                                                        "Ставка: Победа "+name[0])
 
 
                     elif dstats1 < dstats2:
-                        if register(match) != None:
-                            bot.send_message("@mlg_betbot", "#"+str(kok)+" Cтавка от бота:\n"
+                            if register(match) != None:
+                                bot.send_message("@mlg_betbot", "#"+str(kok)+" Cтавка от бота:\n"
                                                 +name[0]+" - "+name[1]+"\n"
                                                                        "Ставка: Победа "+name[1])
-            except Exception:
-                print("Ошибка с выводом данных")
-            finally:
-                print("+")
+                except Exception:
+                    print("Ошибка с выводом данных")
+                finally:
+                    print("+")
             print(dstats1, dstats2)
             #print (dmat1,dmat2 )
             print("------------------------------")
