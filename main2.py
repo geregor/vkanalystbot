@@ -37,7 +37,7 @@ def register(what):
         result = cursor.execute(f"""SELECT * FROM bot WHERE game='{what}'""")
         row = cursor.fetchone()
         if result == 0:
-            cursor.execute(f"INSERT INTO bot(game) VALUES('{what}')")
+            cursor.execute(f"""INSERT INTO bot(game) VALUES('{what}')""")
             conn.commit()
         else:
             return row
