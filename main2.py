@@ -138,9 +138,9 @@ def main():
                     print("Ошибка с выводом данных")
                 finally:
                     print("+")
-            print(dstats1, dstats2)
+                print(dstats1, dstats2)
             #print (dmat1,dmat2 )
-            print("------------------------------")
+                print("------------------------------")
         #print(len(stats))
 
 
