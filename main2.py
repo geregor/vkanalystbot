@@ -12,32 +12,35 @@ import telebot
 import sqlite3
 UserAgent().chrome
 print("Бот запущен")
-conn = sqlite3.connect("server.db") # или :memory: чтобы сохранить в RAM
-cursor = conn.cursor()
+conn = sqlite3.connect('server.db')
+#conn = sqlite3.connect("server.db") # или :memory: чтобы сохранить в RAM
+#cursor = conn.cursor()
 # Создание таблицы
 
 #cursor.execute(f"""INSERT INTO bot VALUES ('SASKE')""")
 
 #print(cursor.execute(f"SELECT game FROM bot WHERE game = '333'").fetchone())
 def bdinsert(what):
-    if cursor.execute(f"SELECT game FROM bot WHERE game = '{what}'").fetchone() == None:
-        cursor.execute(f"""INSERT INTO bot VALUES ('{what}')""")
-        return None
-    else:
-        return 1
-    conn.commit()
+    with sqlite3.connect ('server.db') as conn :
+        cursor = conn.cursor()
+        if cursor.execute(f"SELECT game FROM bot WHERE game = '{what}'").fetchone() == None:
+            cursor.execute(f"""INSERT INTO bot VALUES ('{what}')""")
+            return None
+        else:
+            return 1
+        conn.commit()
+
 
 def register(what):
-	try:
-		result = cursor.execute(f"SELECT * FROM bot WHERE game='{what}'")
-		row = cursor.fetchone()
-		if result == 0:
-			cursor.execute(f"INSERT INTO bot(game) VALUES('{what}')")
-			conn.commit()
-		else:
-			return row
-	finally:
-		conn.commit()
+    with sqlite3.connect ('server.db') as conn :
+        cursor = conn.cursor()
+        result = cursor.execute(f"""SELECT * FROM bot WHERE game='{what}'""")
+        row = cursor.fetchone()
+        if result == 0:
+            cursor.execute(f"INSERT INTO bot(game) VALUES('{what}')")
+            conn.commit()
+        else:
+            return row
 
 #print(cursor.execute("SELECT * FROM bot").fetchall())
 bot = telebot.TeleBot("1486092253:AAFVMoBeQ5MTKL0kNSiCocp7dVmayYPwNoY")
@@ -45,8 +48,8 @@ bot = telebot.TeleBot("1486092253:AAFVMoBeQ5MTKL0kNSiCocp7dVmayYPwNoY")
 
 
 def main():
-    timematch = time.strftime ( "%A - %Y-%m-%d" )  # Сегодняшний день в оформлении hltv.org
-   # timematch = time.strftime ( "%A - %Y-%m-10" )  # Сегодняшний день в оформлении hltv.org
+   # timematch = time.strftime ( "%A - %Y-%m-%d" )  # Сегодняшний день в оформлении hltv.org
+    timematch = time.strftime ( "%Y-%m-12" )  # Сегодняшний день в оформлении hltv.org
     #print(timematch)
 
 
@@ -116,31 +119,34 @@ def main():
                     sleep(15)
                     main()
                 print(match)
-                cursor.execute(f"SELECT * FROM bot")
-
-
-
+                kok = 0
+                with sqlite3.connect ( 'server.db' ) as conn :
+                    cursor = conn.cursor ()
+                    result = len(cursor.execute(f"SELECT * FROM bot").fetchall())
+                    kok = result
                 try:
                     if bdinsert(match) == None:
-                        kok = len ( cursor.fetchall () ) + 1
+                        kok += 1
+                        #kok = len ( cursor.fetchall () ) + 1
                         if dstats1 > dstats2:
                             if register(match) != None:
                                 bot.send_message("@mlg_betbot", "#"+str(kok)+" Cтавка от бота:\n" +name[0]+" - "+name[1]+"\n"
                                                                        "Ставка: Победа "+name[0])
 
 
-                    elif dstats1 < dstats2:
+                        elif dstats1 < dstats2:
                             if register(match) != None:
                                 bot.send_message("@mlg_betbot", "#"+str(kok)+" Cтавка от бота:\n"
                                                 +name[0]+" - "+name[1]+"\n"
                                                                        "Ставка: Победа "+name[1])
                 except Exception:
                     print("Ошибка с выводом данных")
+                    print(Exception)
                 finally:
                     print("+")
                 print(dstats1, dstats2)
             #print (dmat1,dmat2 )
-                print("------------------------------")
+            print("------------------------------\n")
         #print(len(stats))
 
 
