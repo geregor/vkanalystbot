@@ -14,6 +14,7 @@ from pymysql import cursors
 UserAgent().chrome
 teams = []
 bots = []
+ggez = []
 bot = telebot.TeleBot("1486092253:AAFVMoBeQ5MTKL0kNSiCocp7dVmayYPwNoY")
 
 def main():
@@ -21,6 +22,7 @@ def main():
 ########################################## В РАЗРАБОТКЕ ###################################################
     #link = ''
     #input(link)
+    bom = 0
     r = requests.get( 'https://betwinner1.com/ru/live/Football/')
     soup2 = BS (r.content, 'html.parser')
     for i in soup2.findAll('a', class_='c-events__name'):
@@ -52,7 +54,7 @@ def main():
         lol = soup.findAll('meta')
         lol = str(lol[1])
         lol = lol.replace('<meta content="Смотри видеотрансляцию ► BETWINNER1.com и играй в LIVE! Принимаем ставки на футбол: ', '')
-        lol = lol.replace(' . Угадай победителя: '+teams[0]+' - '+teams[1]+' " name="description"/>', '')
+        lol = lol.replace(' . Угадай победителя: '+teams[bom]+' - '+teams[bom+1]+' " name="description"/>', '')
         #print(lol)
 
     #print(soup.findAll('div', class_='c-tablo__text'))
@@ -88,20 +90,31 @@ def main():
                     cat += 'Тотал '+str((int(mass[0])+int(mass[3])))+'.5 Б'
                     #print(11)
     #print(relust)
+
         if len(mass) == 6:
-            print(teams[0]+' - '+teams[1]+'\nМатч идет со счетом: '+mass[0]+' - '+ mass[3]+ '. \nСчет таймов: '+mass[1]+' - '+mass[4]+' | 1 тайм | '+mass[2]+' - '+mass[5]+" | 2 тайм |\n"
-                                                                                                                                             "Статус: "+status+'\n'
+            print(lol + "\n"+teams[bom]+' - '+teams[bom+1]+'\nМатч идет со счетом: '+mass[0]+' - '+ mass[3]+ '. \nСчет таймов: '+mass[1]+' - '+mass[4]+' | 1 тайм | '+mass[2]+' - '+mass[5]+" | 2 тайм |\n"
+                                                                                                                                              "Статус: "+status+'\n'
                                                                                                                                                                'Ставка: '+cat)
+
+
+        name1 = bom
+        name2 = bom+1
+
+        bom += 2
         connection = connect()
         if cat != '':
-            if len(mass) == 6:
-                with connection.cursor() as cursor:
-                    if cursor.execute(f"SELECT Gmatch FROM matches WHERE Gmatch = '{str ( teams[ 0 ] ) + '-' + str ( teams [ 1 ] )}'") < 1:
-                        cursor.execute(f"INSERT INTO matches(Gmatch) VALUES ('{str ( teams[ 0 ] ) + '-' + str ( teams [ 1 ] )}')")
-                        connection.commit()
-                bot.send_message('@mlg_betbot', teams[0]+' - '+teams[1]+'\nМатч идет со счетом: '+mass[0]+' - '+ mass[3]+ '. \nСчет таймов: '+mass[1]+' - '+mass[4]+' | 1 тайм | '+mass[2]+' - '+mass[5]+" | 2 тайм |\n"
+            if len(mass) == 6 :
+                if str ( teams[ 0 ] ) + '-' + str ( teams [ 1 ] ) not in ggez:
+                    ggez.append(str ( teams[ 0 ] ) + '-' + str ( teams [ 1 ] ))
+                    with connection.cursor() as cursor:
+                        if cursor.execute(f"SELECT Gmatch FROM matches WHERE Gmatch = '{str ( teams[ 0 ] ) + '-' + str ( teams [ 1 ] )}'") < 1:
+                            cursor.execute(f"INSERT INTO matches(Gmatch) VALUES ('{str ( teams[ 0 ] ) + '-' + str ( teams [ 1 ] )}')")
+                            connection.commit()
+
+                bot.send_message('@mlg_betbot', lol + "\n"+teams[name1]+' - '+teams[name2]+'\nМатч идет со счетом: '+mass[0]+' - '+ mass[3]+ '. \nСчет таймов: '+mass[1]+' - '+mass[4]+' | 1 тайм | '+mass[2]+' - '+mass[5]+" | 2 тайм |\n"
                                                                                                                                              "Статус: "+status+'\n'
                                                                                                                                                                'Ставка: '+cat)
+
             #elif len(mass) == 4:
 
                 #bot.send_message('@mlg_betbot', teams[0]+' - '+teams[1]+'\nМатч идет со счетом: '+mass[0]+' - '+ mass[2]+ '. \nСчет таймов: '+mass[1]+' - '+mass[3]+' | 1 тайм |\n'+
