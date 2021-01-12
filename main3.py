@@ -27,6 +27,7 @@ def main():
         bots.append(i.get("href"))
     for gye in bots:
         mass = [ ]
+        status = ''
         link = gye
         r = requests.get ("https://betwinner1.com/ru/"+ link)
         #r = requests.get ( 'https://betwinner.com/ru/cyber/FIFA/2039638-FIFA-20-4x4-England-Championship/' , headers={'User-Agent' : UserAgent ().chrome} )
@@ -37,8 +38,9 @@ def main():
             print(i.text)
         for i in soup.findAll('div', class_='ls-game__text'):
             status = i.text
-        status = status.replace('\n', '')
-        status = status.strip()
+        if status != None:
+            status = status.replace('\n', '')
+            status = status.strip()
         if status == '':
             status = 'Не найден'
         for i in soup.findAll('div', class_='ls-game__name'):
