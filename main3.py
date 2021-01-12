@@ -81,13 +81,17 @@ def main():
                 if int(mass[0]) == 0 and int(mass[3]) == 0 and int(time) >= 60 and c == False: #Счет 0-0 и время больше 60 минут
                     cat += 'Тотал 0.5 Б'
                     #print(33)
-                elif int(mass[0]) <= 1 and int(mass[3]) <= 1 and int(mass[0]) != int(mass[3]) and c == False and int(time) >= 65 and mass[2] == mass[5] and mass[2] == 0: #Счет 0-1 или 1-0 и время больше 65 минут
+                elif int(mass[0]) != int(mass[3]) and c == False and int(time) >= 65 and int(mass[2]) == int(mass[5]) and int(mass[2]) == 0: #Счет 0-1 или 1-0 и время больше 65 минут
                     cat += 'Тотал '+str((int(mass[0])+int(mass[3])))+'.5 Б'
                     #print(22)
-                elif (int(mass[0]) <= 2 or int(mass[3]) <= 2) and int(mass[0]) != int(mass[3]) and c == False and int(time) >= 55 and mass[2] == mass[5] and mass[2] == 0:#Счет 3М и время 65 минут
+                elif int(mass[0]) != int(mass[3]) and c == False and int(time) >= 55 and int(mass[2]) == int(mass[5]) and int(mass[2]) == 0:#Счет 3М и время 65 минут
                     cat += 'Тотал '+str((int(mass[0])+int(mass[3])))+'.5 Б'
                     #print(11)
     #print(relust)
+        if len(mass) == 6:
+            print(teams[0]+' - '+teams[1]+'\nМатч идет со счетом: '+mass[0]+' - '+ mass[3]+ '. \nСчет таймов: '+mass[1]+' - '+mass[4]+' | 1 тайм | '+mass[2]+' - '+mass[5]+" | 2 тайм |\n"
+                                                                                                                                             "Статус: "+status+'\n'
+                                                                                                                                                               'Ставка: '+cat)
         connection = connect()
         if cat != '':
             if len(mass) == 6:
