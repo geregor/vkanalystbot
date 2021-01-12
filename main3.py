@@ -112,7 +112,7 @@ def main():
                             cursor.execute(f"INSERT INTO matches(Gmatch) VALUES ('{str ( teams[ 0 ] ) + '-' + str ( teams [ 1 ] )}')")
                             connection.commit()
 
-                bot.send_message('@mlg_betbot', teams[name1]+' - '+teams[name2]+'\nМатч идет со счетом: '+mass[0]+' - '+ mass[3]+ '. \nСчет таймов: '+mass[1]+' - '+mass[4]+' | 1 тайм | '+mass[2]+' - '+mass[5]+" | 2 тайм |\n"
+                bot.send_message('@mlg_betbot', lol+'\nМатч идет со счетом: '+mass[0]+' - '+ mass[3]+ '. \nСчет таймов: '+mass[1]+' - '+mass[4]+' | 1 тайм | '+mass[2]+' - '+mass[5]+" | 2 тайм |\n"
                                                                                                                                              "Статус: "+status+'\n'
                                                                                                                                                                'Ставка: '+cat)
 
