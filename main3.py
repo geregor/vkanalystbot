@@ -28,6 +28,7 @@ def main():
     for i in soup2.findAll('a', class_='c-events__name'):
         bots.append(i.get("href"))
     for gye in bots:
+        lol = ''
         mass = [ ]
         status = ''
         link = gye
@@ -104,8 +105,8 @@ def main():
         connection = connect()
         if cat != '':
             if len(mass) == 6 :
-                if str ( teams[ 0 ] ) + '-' + str ( teams [ 1 ] ) not in ggez:
-                    ggez.append(str ( teams[ 0 ] ) + '-' + str ( teams [ 1 ] ))
+                if str ( teams[ name1 ] ) + '-' + str ( teams [ name2 ] ) not in ggez:
+                    ggez.append(str ( teams[ name1 ] ) + '-' + str ( teams [ name2 ] ))
                     with connection.cursor() as cursor:
                         if cursor.execute(f"SELECT Gmatch FROM matches WHERE Gmatch = '{str ( teams[ 0 ] ) + '-' + str ( teams [ 1 ] )}'") < 1:
                             cursor.execute(f"INSERT INTO matches(Gmatch) VALUES ('{str ( teams[ 0 ] ) + '-' + str ( teams [ 1 ] )}')")
