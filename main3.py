@@ -55,7 +55,8 @@ def main():
         lol = soup.findAll('meta')
         lol = str(lol[1])
         lol = lol.replace('<meta content="Смотри видеотрансляцию ► BETWINNER1.com и играй в LIVE! Принимаем ставки на футбол: ', '')
-        lol = lol.replace(' . Угадай победителя: '+teams[bom]+' - '+teams[bom+1]+' " name="description"/>', '')
+        lol = lol.replace(' . Угадай победителя: , '') 
+        lol = lol.replace(' name="description"/>', '')
         print(lol)
 
     #print(soup.findAll('div', class_='c-tablo__text'))
