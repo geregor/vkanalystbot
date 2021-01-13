@@ -38,7 +38,7 @@ def main():
 
         for i in soup.findAll('span', class_='ls-game__score'):
             mass.append(i.text)
-            print(i.text)
+            #print(i.text)
         for i in soup.findAll('div', class_='ls-game__text'):
             status = i.text
         if status != None:
@@ -98,18 +98,21 @@ def main():
                                                                                                                                               "Статус: "+status+'\n'
                                                                                                                                                                'Ставка: '+cat)
 
-
+        #print(lol in ggez)
         name1 = bom
         name2 = bom+1
         bom += 2
         connection = connect()
         if cat != '':
+            print('1')
             if len(mass) == 6 :
-                if lol not in ggez == False:
+                print(2)
+                if (lol in ggez) == False:
+                    print(3)
                     ggez.append(lol)
                     with connection.cursor() as cursor:
-                        if cursor.execute(f"SELECT Gmatch FROM matches WHERE Gmatch = '{str ( teams[ 0 ] ) + '-' + str ( teams [ 1 ] )}'") < 1:
-                            cursor.execute(f"INSERT INTO matches(Gmatch) VALUES ('{str ( teams[ 0 ] ) + '-' + str ( teams [ 1 ] )}')")
+                        if cursor.execute(f"SELECT Gmatch FROM matches WHERE Gmatch = '{lol}'") != 1:
+                            cursor.execute(f"INSERT INTO matches(Gmatch) VALUES ('{lol}')")
                             connection.commit()
 
                 bot.send_message('@mlg_betbot', lol+'\nМатч идет со счетом: '+mass[0]+' - '+ mass[3]+ '. \nСчет таймов: '+mass[1]+' - '+mass[4]+' | 1 тайм | '+mass[2]+' - '+mass[5]+" | 2 тайм |\n"
