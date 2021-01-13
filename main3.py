@@ -68,7 +68,7 @@ def main():
       #  if col >= 95000 and col <= 95500:
      #       text = text + i
     #print(text)
-        if status != 'Не найден':
+        if status != 'Не найден' and lol != '':
             if re.search('1-й', status) != None:
                 time = status.replace('1-й Тайм,прошло ', '')
             elif re.search('2-й', status) != None:
@@ -92,7 +92,7 @@ def main():
                     #print(11)
     #print(relust)
 
-        if len(mass) == 6:
+        if len(mass) == 6 and lol != '':
             print(teams[bom]+' - '+teams[bom+1]+'\nМатч идет со счетом: '+mass[0]+' - '+ mass[3]+ '. \nСчет таймов: '+mass[1]+' - '+mass[4]+' | 1 тайм | '+mass[2]+' - '+mass[5]+" | 2 тайм |\n"
                                                                                                                                               "Статус: "+status+'\n'
                                                                                                                                                                'Ставка: '+cat)
