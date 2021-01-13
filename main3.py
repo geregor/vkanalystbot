@@ -104,18 +104,16 @@ def main():
         bom += 2
         connection = connect()
         if cat != '':
-            print('1')
             if len(mass) == 6 :
-                print(2)
                 if (lol in ggez) == False:
-                    print(3)
                     ggez.append(lol)
                     with connection.cursor() as cursor:
+                        print(cursor.execute(f"SELECT Gmatch FROM matches WHERE Gmatch = '{lol}'"))
                         if cursor.execute(f"SELECT Gmatch FROM matches WHERE Gmatch = '{lol}'") != 1:
                             cursor.execute(f"INSERT INTO matches(Gmatch) VALUES ('{lol}')")
                             connection.commit()
 
-                bot.send_message('@mlg_betbot', lol+'\nМатч идет со счетом: '+mass[0]+' - '+ mass[3]+ '. \nСчет таймов: '+mass[1]+' - '+mass[4]+' | 1 тайм | '+mass[2]+' - '+mass[5]+" | 2 тайм |\n"
+                            bot.send_message('@mlg_betbot', lol+'\nМатч идет со счетом: '+mass[0]+' - '+ mass[3]+ '. \nСчет таймов: '+mass[1]+' - '+mass[4]+' | 1 тайм | '+mass[2]+' - '+mass[5]+" | 2 тайм |\n"
                                                                                                                                              "Статус: "+status+'\n'
                                                                                                                                                                'Ставка: '+cat)
 
