@@ -55,7 +55,7 @@ def main():
         lol = soup.findAll('meta')
         lol = str(lol[1])
         lol = lol.replace('<meta content="Смотри видеотрансляцию ► BETWINNER1.com и играй в LIVE! Принимаем ставки на футбол: ', '')
-        lol = lol.replace(' . Угадай победителя: ', '') 
+        lol = lol.replace(' . Угадай победителя:', '')
         lol = lol.replace('" name="description"/>', '')
         print(lol)
 
@@ -101,13 +101,12 @@ def main():
 
         name1 = bom
         name2 = bom+1
-
         bom += 2
         connection = connect()
         if cat != '':
             if len(mass) == 6 :
-                if str ( teams[ name1 ] ) + '-' + str ( teams [ name2 ] ) not in ggez:
-                    ggez.append(str ( teams[ name1 ] ) + '-' + str ( teams [ name2 ] ))
+                if lol not in ggez == False:
+                    ggez.append(lol)
                     with connection.cursor() as cursor:
                         if cursor.execute(f"SELECT Gmatch FROM matches WHERE Gmatch = '{str ( teams[ 0 ] ) + '-' + str ( teams [ 1 ] )}'") < 1:
                             cursor.execute(f"INSERT INTO matches(Gmatch) VALUES ('{str ( teams[ 0 ] ) + '-' + str ( teams [ 1 ] )}')")
