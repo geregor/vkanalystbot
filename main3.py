@@ -76,7 +76,7 @@ def main():
                 time = status.replace('2-й Тайм,прошло ', '')
             else:
                 time = status.replace('Перерыв,прошло ', '')
-                time = time.replace('')
+                time = time.replace('Игра завершена,прошло ', '')
             time = time.replace(' мин', '')
             #print(time)
             cat = ''
