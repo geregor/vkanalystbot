@@ -76,19 +76,19 @@ def main():
                 time = status.replace('2-й Тайм,прошло ', '')
             else:
                 time = status.replace('Перерыв,прошло ', '')
-                time = time.replace('Игра завершена,прошло ', '')
+                time = time.replace('')
             time = time.replace(' мин', '')
             #print(time)
             cat = ''
             c = False
-            if len(mass) == 6:
-                if int(mass[0]) == 0 and int(mass[3]) == 0 and int(time) >= 60 and c == False: #Счет 0-0 и время больше 60 минут
+            if (len(mass) == 6) and ('завершена' in time == False) and (mass[0] != '') and (mass[3] != '') and (time != '') and (mass[2] != '') and (mass[5] != ''):
+                if (int(mass[0]) == 0) and (int(mass[3]) == 0) and (int(time) >= 60) and (int(mass[2]) == int(mass[5])) and (int(mass[2]) == 0) and (c == False): #Счет 0-0 и время больше 60 минут
                     cat += 'Тотал 0.5 Б'
                     #print(33)
-                elif int(mass[0]) != int(mass[3]) and c == False and int(time) >= 65 and int(mass[2]) == int(mass[5]) and int(mass[2]) == 0: #Счет 0-1 или 1-0 и время больше 65 минут
-                    cat += 'Тотал '+str((int(mass[0])+int(mass[3])))+'.5 Б'
+               # elif (int(mass[0]) != int(mass[3])) and (c == False) and (int(time) >= 65) and (int(mass[2]) == int(mass[5])) and (int(mass[2]) == 0): #Счет 0-1 или 1-0 и время больше 65 минут
+                #    cat += 'Тотал '+str((int(mass[0])+int(mass[3])))+'.5 Б'
                     #print(22)
-                elif int(mass[0]) != int(mass[3]) and c == False and int(time) >= 55 and int(mass[2]) == int(mass[5]) and int(mass[2]) == 0:#Счет 3М и время 65 минут
+                elif (int(mass[0]) != int(mass[3])) and (c == False) and (int(time) >= 55) and (int(mass[2]) == int(mass[5])) and (int(mass[2]) == 0):#Счет 3М и время 65 минут
                     cat += 'Тотал '+str((int(mass[0])+int(mass[3])))+'.5 Б'
                     #print(11)
     #print(relust)
@@ -96,7 +96,7 @@ def main():
         if len(mass) == 6 and lol != '':
             print(teams[bom]+' - '+teams[bom+1]+'\nМатч идет со счетом: '+mass[0]+' - '+ mass[3]+ '. \nСчет таймов: '+mass[1]+' - '+mass[4]+' | 1 тайм | '+mass[2]+' - '+mass[5]+" | 2 тайм |\n"
                                                                                                                                               "Статус: "+status+'\n'
-                                                                                                                                                               'Ставка: '+cat)
+                                                                                                                                                               'Ставка: 1% Гол будет забит до '+str((int(time)+15))+' минуты, если проигрыш 4% на '+cat)
 
         #print(lol in ggez)
         name1 = bom
@@ -114,8 +114,8 @@ def main():
                             connection.commit()
 
                             bot.send_message('@mlg_betbot', lol+'\nМатч идет со счетом: '+mass[0]+' - '+ mass[3]+ '. \nСчет таймов: '+mass[1]+' - '+mass[4]+' | 1 тайм | '+mass[2]+' - '+mass[5]+" | 2 тайм |\n"
-                                                                                                                                             "Статус: "+status+'\n'
-                                                                                                                                                               'Ставка: '+cat)
+                                                                                                                                              "Статус: "+status+'\n'
+                                                                                                                                                               'Ставка: 1% Гол будет забит до '+str((int(time)+15))+' минуты, если проигрыш 4% на '+cat)
 
             #elif len(mass) == 4:
 
