@@ -12,9 +12,7 @@ from adds import connect
 import pymysql
 from pymysql import cursors
 UserAgent().chrome
-teams = []
-bots = []
-ggez = []
+
 bot = telebot.TeleBot("1486092253:AAFVMoBeQ5MTKL0kNSiCocp7dVmayYPwNoY")
 
 def main():
@@ -22,6 +20,9 @@ def main():
 ########################################## В РАЗРАБОТКЕ ###################################################
     #link = ''
     #input(link)
+    teams = []
+    bots = []
+    ggez = []
     bom = 0
     r = requests.get( 'https://betwinner1.com/ru/live/Football/')
     soup2 = BS (r.content, 'html.parser')
