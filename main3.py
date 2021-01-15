@@ -82,7 +82,7 @@ def main():
             #print(time)
             cat = ''
             c = False
-            if len(mass) == 6 and 'завершена' in time == False and mass[0] != '' and mass[3] != '' and time != '' and mass[2] != '' and mass[5] != '':
+            if len(mass) == 6 and ('завершена' in time) == False:
                 if int(mass[0]) == 0 and int(mass[3]) == 0 and int(time) >= 60 and int(mass[2]) == int(mass[5]) and int(mass[2]) == 0 and c == False: #Счет 0-0 и время больше 60 минут
                     cat += 'Тотал 0.5 Б'
                     #print(33)
