@@ -91,9 +91,6 @@ def main():
                     #print(22)
                 elif (int(mass[0]) != int(mass[3])) and (c == False) and (int(time) >= 55) and (int(mass[2]) == int(mass[5])) and (int(mass[2]) == 0):#Счет 3М и время 65 минут
                     cat += 'Тотал '+str((int(mass[0])+int(mass[3])))+'.5 Б'
-                elif ('жен' in lol) == True and int(time) >= 55 :
-                    cat += 'Тотал ' + str ( (int ( mass [ 0 ] ) + int ( mass [ 3 ] )) ) + '.5 Б'
-                    #print(11)
     #print(relust)
 
         if len(mass) == 6 and lol != '' and time != '':
