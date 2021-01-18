@@ -24,16 +24,17 @@ def main():
     bots = []
     ggez = []
     bom = 0
-    r = requests.get( 'https://betwinner1.com/ru/live/Football/')
+    r = requests.get( 'https://betwinner1.com/ru/live/Football/', headers={'User-Agent' : UserAgent ().random} )
     soup2 = BS (r.content, 'html.parser')
     for i in soup2.findAll('a', class_='c-events__name'):
         bots.append(i.get("href"))
+    print(bots)
     for gye in bots:
         lol = ''
         mass = [ ]
         status = ''
         link = gye
-        r = requests.get ("https://betwinner1.com/ru/"+ link)
+        r = requests.get ("https://betwinner1.com/ru/"+ link, headers={'User-Agent' : UserAgent ().random} )
         #r = requests.get ( 'https://betwinner.com/ru/cyber/FIFA/2039638-FIFA-20-4x4-England-Championship/' , headers={'User-Agent' : UserAgent ().chrome} )
         soup = BS ( r.content , 'html.parser' )  # Парсит данные c ссылки сверху
 
@@ -82,6 +83,7 @@ def main():
             #print(time)
             cat = ''
             c = False
+            print("mass=="+str(mass)+"\nTime=="+str(time)+"\nmass[0]=="+str(mass[0])+"\nmass[3]")
             if (len(mass) == 6) and ('завершена' in time == False) and (mass[0] != '') and (mass[3] != '') and (time != '') and (mass[2] != '') and (mass[5] != ''):
                 if (int(mass[0]) == 0) and (int(mass[3]) == 0) and (int(time) >= 60) and (int(mass[2]) == int(mass[5])) and (int(mass[2]) == 0) and (c == False): #Счет 0-0 и время больше 60 минут
                     cat += 'Тотал 0.5 Б'
@@ -91,9 +93,12 @@ def main():
                     #print(22)
                 elif (int(mass[0]) != int(mass[3])) and (c == False) and (int(time) >= 55) and (int(mass[2]) == int(mass[5])) and (int(mass[2]) == 0):#Счет 3М и время 65 минут
                     cat += 'Тотал '+str((int(mass[0])+int(mass[3])))+'.5 Б'
+                elif ('жен' in lol) == True and int(time) >= 55 :
+                    cat += 'Тотал ' + str ( (int ( mass [ 0 ] ) + int ( mass [ 3 ] )) ) + '.5 Б'
+                    #print(11)
     #print(relust)
 
-        if len(mass) == 6 and lol != '' and time != '':
+        if len(mass) == 6 and lol != '':
             print(teams[bom]+' - '+teams[bom+1]+'\nМатч идет со счетом: '+mass[0]+' - '+ mass[3]+ '. \nСчет таймов: '+mass[1]+' - '+mass[4]+' | 1 тайм | '+mass[2]+' - '+mass[5]+" | 2 тайм |\n"
                                                                                                                                               "Статус: "+status+'\n'
                                                                                                                                                                'Ставка: 1% Гол будет забит до '+str((int(time)+15))+' минуты, если проигрыш 4% на '+cat)
@@ -103,7 +108,7 @@ def main():
         name2 = bom+1
         bom += 2
         connection = connect()
-        if cat != '' and time != '':
+        if cat != '':
             if len(mass) == 6 :
                 if (lol in ggez) == False:
                     ggez.append(lol)
