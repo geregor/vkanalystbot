@@ -96,7 +96,7 @@ def main():
                     #print(11)
     #print(relust)
 
-        if len(mass) == 6 and lol != '':
+        if len(mass) == 6 and lol != '' and time != '':
             print(teams[bom]+' - '+teams[bom+1]+'\nМатч идет со счетом: '+mass[0]+' - '+ mass[3]+ '. \nСчет таймов: '+mass[1]+' - '+mass[4]+' | 1 тайм | '+mass[2]+' - '+mass[5]+" | 2 тайм |\n"
                                                                                                                                               "Статус: "+status+'\n'
                                                                                                                                                                'Ставка: 1% Гол будет забит до '+str((int(time)+15))+' минуты, если проигрыш 4% на '+cat)
@@ -106,7 +106,7 @@ def main():
         name2 = bom+1
         bom += 2
         connection = connect()
-        if cat != '':
+        if cat != '' and time != '':
             if len(mass) == 6 :
                 if (lol in ggez) == False:
                     ggez.append(lol)
