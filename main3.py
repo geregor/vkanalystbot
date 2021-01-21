@@ -83,8 +83,8 @@ def main():
             #print(time)
             cat = ''
             c = False
-            print("mass=="+str(mass)+"\nTime=="+str(time)+"\nmass[0]=="+str(mass[0])+"\nmass[3]")
-            if (len(mass) == 6) and ('завершена' in time == False) and (mass[0] != '') and (mass[3] != '') and (time != '') and (mass[2] != '') and (mass[5] != ''):
+            print("mass=="+str(len(mass) == 6)+"\nTime=="+str('завершена' in time)+"\nmass[0]=="+str(mass[0] != '')+"\nmass[3]"+str(time != ''))
+            if (len(mass) == 6) and ('завершена' in time) == False and (mass[0] != '') and (mass[3] != '') and (time != '') and (mass[2] != '') and (mass[5] != ''):
                 if (int(mass[0]) == 0) and (int(mass[3]) == 0) and (int(time) >= 60) and (int(mass[2]) == int(mass[5])) and (int(mass[2]) == 0) and (c == False): #Счет 0-0 и время больше 60 минут
                     cat += 'Тотал 0.5 Б'
                     #print(33)
@@ -93,7 +93,7 @@ def main():
                     #print(22)
                 elif (int(mass[0]) != int(mass[3])) and (c == False) and (int(time) >= 55) and (int(mass[2]) == int(mass[5])) and (int(mass[2]) == 0):#Счет 3М и время 65 минут
                     cat += 'Тотал '+str((int(mass[0])+int(mass[3])))+'.5 Б'
-                elif ('жен' in lol) == True and int(time) >= 55 :
+                elif ('жен' in lol) == True and int(time) >= 55 and (int(mass[2]) == int(mass[5])) and (int(mass[2]) == 0) :
                     cat += 'Тотал ' + str ( (int ( mass [ 0 ] ) + int ( mass [ 3 ] )) ) + '.5 Б'
                     #print(11)
     #print(relust)
